@@ -9,74 +9,101 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1 class="text-center mt-5 mb-5 text-primary">Python_Flask_MySQL</h1>
+    <h1 class="text-center mt-5 mb-5 text-primary">Products</h1>
 
     <div class="container">
         <div class="card shadow">
             <div class="card-body">
-                <form action="" method="POST">
-                    <div class="row mb-3">
-                        <div class="col">
-                            <label>RFID</label>
-                            <input type="text" class="form-control mb-3" name="Rfid">
-                        </div>
-                        <div class="col">
-                            <label>Name</label>
-                            <input type="text" class="form-control mb-3" name="name">
-                        </div>
-
-                        <div class="col">
-                            <label>Description</label>
-                            <input type="text" class="form-control mb-3" name="description">
-                        </div>
-
-                        <div class="col">
-                            <label>Price</label>
-                            <input type="text" class="form-control mb-3" name="price">
-                        </div>
-
-                        <div class="col">
-                            <label>Stock</label>
-                            <input type="text" class="form-control mb-3" name="stock">
-                        </div>
-
-                        <div class="col">
-                            <label>CompanyID</label>
-                            <input type="text" class="form-control mb-3" name="companyid">
-                        </div>
-
-                         <div class="col">
-                            <button class="btn btn-primary mb-3 mt-4" type="submit">Save</button>
-                        </div>
+                <form action="/Products" method="POST">
+                    <div class="col">
+                        <label>Nombre</label>
+                        <input type="text" class="form-control mb-3" name="Nombre">
                     </div>
+                    <div class="col">
+                        <label>Descripcion</label>
+                        <input type="text" class="form-control mb-3" name="Descripcion">
+                    </div>
+                    <div class="col">
+                        <label>Precio</label>
+                        <input type="text" class="form-control mb-3" name="Precio">
+                    </div>
+                    <div class="col">
+                        <label>Stock</label>
+                        <input type="text" class="form-control mb-3" name="Stock">
+                    </div>
+                    <div class="col">
+                        <label>EmpersaId</label>
+                        <input type="text" class=" form-control mb-3" name="EmpresaId">
+                    </div>
+                    <button class="btn btn-primary mb-3 mt-4" type="submit">Save</button>
                 </form>
+                
 
                 <!--Tabla-->
 
                 <table class="table table-bordered">
                     <thead>
-                        <th scope="col">#</th>
                        <th scope="col">RFID</th>
-                       <th scope="col">Name</th>
-                       <th scope="col">Description</th>
-                       <th scope="col">Price</th>
+                       <th scope="col">Nombre</th>
+                       <th scope="col">Descripcion</th>
+                       <th scope="col">Precio</th>
                        <th scope="col">Stock</th>
-                       <th scope="col">CompanyID</th>
+                       <th scope="col">EmpresaId</th>
                        <th scope="col">Edit</th>
                        <th scope="col">Delete</th>
                     </thead>
-                </table>
+                
                 <tbody>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    {% for d in data %}
+                    <tr>
+                    <td>{{d.RFID}}</td>
+                    <td>{{d.Nombre}}</td>
+                    <td>{{d.Descripcion}}</td>
+                    <td>{{d.Precio}}</td>
+                    <td>{{d.Stock}}</td>
+                    <td>{{d.EmpresaId}}</td>
+                    <td><button class="btn btn-primary btn-sm" id="btn-edit{{d.RFID}}" data-bs-toggle="modal" data-bs-target="#modal{{d.RFID}}">Edit</button></td>  
+                    <td><a href="{{url_for('delete', RFID=d.RFID)}}" class="btn btn-danger btn-sm">Delete</a></td>
+                    </tr>
+
+                                <!--Modal-->
+<div class="modal fade" id="modal{{d.RFID}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">{{d.Nombre}}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Asegúrate de que el formulario tiene el método POST -->
+          <form action="/edit/{{d.RFID}}" method="post">
+            <label>Nombre</label>
+            <input type="text" class="form-control mb-3" name="Nombre" value="{{d.Nombre}}">
+            <label>Descripcion</label>
+            <input type="text" class="form-control mb-3" name="Descripcion" value="{{d.Descripcion}}">
+            <label>Precio</label>
+            <input type="text" class="form-control mb-3" name="Precio" value="{{d.Precio}}">
+            <label>Stock</label>
+            <input type="text" class="form-control mb-3" name="Stock" value="{{d.Stock}}">
+            <label>EmpresaId</label>
+            <input type="text" class="form-control mb-3" name="EmpresaId" value="{{d.EmpresaId}}">
+
+            <!-- Colocar el botón de enviar dentro del formulario -->
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
+
+                      
+
+                    {% endfor %}
                 </tbody>
+            </table>
+
             </div>
         </div>
     </div>

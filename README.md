@@ -1,2 +1,2 @@
 # CRUD_Flask
-The main intention of this project is to learn new technologies like Flask, Flask is usefull for connect a database languaje with a programming language easly than doing in a "native form". 
+The main intention of this project is to learn new technologies, such as Flask. Flask is useful for connecting a database language with a programming language more easily than doing it in a 'native form. 
